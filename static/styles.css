@@ -1,3 +1,32 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+body {@apply bg-gray-1000 text-gray-50;}
+
+h1 { @apply text-6xl font-bold text-gray-50 text-center mt-2; }
+h2 { @apply text-4xl text-gray-50 text-center; }
+p { @apply text-sm text-gray-50 text-justify; }
+
+a { @apply text-blue-300 hover:underline duration-200;}
+
+.panel { 
+    @apply rounded-lg p-4 mx-auto max-w-[40rem];
+}
+
+form { @apply flex flex-col items-center; }
+.form-group { @apply w-full mt-2; }
+input[type="text"], input[type="password"], textarea { @apply w-full py-2 my-2 border-gray-800 bg-gray-1000 border-b-[1px] outline-none focus:border-blue-300 duration-200 mt-0; }
+label { @apply text-base text-gray-300; }
+
+/* Scroll ball */
+::-webkit-scrollbar { width: 5px; }
+::-webkit-scrollbar-track { background: none; }
+::-webkit-scrollbar-thumb { background: #888; border-radius: 5px; }
+::-webkit-scrollbar-thumb:hover { background: #555; }
+
+/* No scroll bar */
+.no-scroll-bar::-webkit-scrollbar { width: 0px; }
+.no-scroll-bar::-webkit-scrollbar-track { background: none; }
+.no-scroll-bar::-webkit-scrollbar-thumb { background: none; border-radius: 5px; }
+.no-scroll-bar::-webkit-scrollbar-thumb:hover { background: none; }
