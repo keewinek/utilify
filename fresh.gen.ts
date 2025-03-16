@@ -5,6 +5,7 @@
 import * as $_404 from "./routes/_404.tsx";
 import * as $_app from "./routes/_app.tsx";
 import * as $account_settings from "./routes/account_settings.tsx";
+import * as $api_create_project from "./routes/api/create_project.ts";
 import * as $api_create_user from "./routes/api/create_user.ts";
 import * as $api_login from "./routes/api/login.ts";
 import * as $api_send_debug_log from "./routes/api/send_debug_log.ts";
@@ -24,6 +25,7 @@ const manifest = {
     "./routes/_404.tsx": $_404,
     "./routes/_app.tsx": $_app,
     "./routes/account_settings.tsx": $account_settings,
+    "./routes/api/create_project.ts": $api_create_project,
     "./routes/api/create_user.ts": $api_create_user,
     "./routes/api/login.ts": $api_login,
     "./routes/api/send_debug_log.ts": $api_send_debug_log,

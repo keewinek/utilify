@@ -1,10 +1,13 @@
 import * as sdk from "https://deno.land/x/appwrite/mod.ts";
 import { user } from "../interfaces/user.ts";
 import { send_error, send_log } from "../routes/api/send_debug_log.ts";
+import project from "../interfaces/project.ts";
 
 const project_id = "67d6a34a003a9c5addae";
 const database_id = "67d6a36700250c314304";
+
 const users_id = "67d6a3760032ca5b7368";
+const projects_id = "67d71415000343fdea80";
 
 const client = new sdk.Client();
 const databases = new sdk.Databases(client);
@@ -58,6 +61,8 @@ function good_rate_limit() {
     return true;
 }
 
+// USER
+
 export function get_only_user_keys(user:user)
 {
     //! THIS MAY CAUSE PROBLEMS!
@@ -69,8 +74,6 @@ export function get_only_user_keys(user:user)
         token: user.token,
     } as user
 }
-
-
 
 export async function update_user(user: user) {
     try {
@@ -129,4 +132,67 @@ export async function delete_user(user: user)
 
     const result = await databases.deleteDocument(database_id, users_id, user.id)
     return {"success" : true, "response" : result};
+}
+
+// PROJECTS
+
+export function get_only_project_keys(project:project)
+{
+    return {
+        id: project.id,
+        name: project.name,
+        urlid: project.urlid,
+        description: project.description,
+        inputs_jsons: project.inputs_jsons,
+        code: project.code,
+        approved: project.approved,
+        views: project.views,
+        created_at: project.created_at,
+        user_id: project.user_id,
+    } as project
+}
+
+export async function get_projects_by_query(query: string[])
+{
+    connect_client()
+    if (!good_rate_limit()) return {"error" : "Self Rate limit exceeded."};
+
+    let documents = await databases.listDocuments(database_id, projects_id, query);
+    let projects: project[] = [];
+
+    for (const document of documents.documents) {
+        projects.push(get_only_project_keys(document as unknown as project));
+    }
+
+    if (projects.length > 0) {
+        return projects;
+    }
+
+    return null;
+}
+
+export async function get_project_by_value(value_name:string, value:string|boolean|number) {
+    return await get_projects_by_query([sdk.Query.equal(value_name, value)])
+}
+
+export async function get_next_available_project_id() {
+    const highest_id_projects = await get_projects_by_query([sdk.Query.orderDesc("id"), sdk.Query.limit(1)])
+    if (highest_id_projects == null) return 1;
+    if ("error" in highest_id_projects) return {"error" : highest_id_projects.error};
+    return (highest_id_projects[0].id + 1);
+}
+
+export async function create_project(project: project)
+{
+    connect_client()
+    if (!good_rate_limit()) return {"error" : "Self Rate limit exceeded."};
+
+    const result = await databases.createDocument(database_id, projects_id, project.id.toString(), project)
+    if (result.$id != null){
+        console.log(`[DB Projects] Project created: ${result}`);
+        return {"success" : true, "response" : result};
+    }
+
+    console.error(`[DB Projects] Failed to create a project. Result: ${result}`)
+    return {"error" : result};
 }
