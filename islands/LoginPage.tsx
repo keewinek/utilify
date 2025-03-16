@@ -45,6 +45,9 @@ export default function LoginPage()
                     localStorage.setItem("token", data.token);
                     localStorage.setItem("user_data", JSON.stringify(data));
                     window.location.href = "/";
+                }).catch((error) => {
+                    error_display.innerText = "An error occurred while creating your account. Please report this to us."
+                    setLoading(false);
                 })
             })
         })
@@ -69,7 +72,7 @@ export default function LoginPage()
 
                 {
                     loading &&
-                    <Button text="Logging you in.." fa_icon="spinner" full/>
+                    <Button text="Logging you in.." fa_icon="spinner animate-spin" full/>
                 }
                 {
                     !loading &&

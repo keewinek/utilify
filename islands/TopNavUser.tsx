@@ -73,8 +73,8 @@ export default function TopNavUser()
                                 <i class="fa-solid fa-ellipsis-vertical"></i>
                             </button>
                             <div class="absolute dropdown right-0 mt-2 w-48 max-w-screen bg-black rounded-md shadow-lg py-1 z-20 hidden">
-                                <a href="/add" class="block px-4 py-2 text-gray-50 hover:bg-gray-950 hover:no-underline"><i class="fa-solid fa-plus mr-2"></i>Add Server</a>
-                                <a href="/your_servers" class="block px-4 py-2 text-gray-50 hover:bg-gray-950 hover:no-underline"><i class="fa-solid fa-server mr-2"></i>Your Servers</a>
+                                <a href="/create" class="block px-4 py-2 text-gray-50 hover:bg-gray-950 hover:no-underline"><i class="fa-solid fa-plus mr-2"></i>Create</a>
+                                <a href={`/user/${user_data.username}`} class="block px-4 py-2 text-gray-50 hover:bg-gray-950 hover:no-underline"><i class="fa-solid fa-list mr-2"></i>Your projects</a>
                                 <a href="/account_settings" class="block px-4 py-2 text-gray-50 hover:bg-gray-950 hover:no-underline"><i class="fa-solid fa-gear mr-2"></i>Account Settings</a>
                                 <a href="#" onClick={logout} class="block px-4 py-2 text-gray-50 hover:bg-red-950 hover:no-underline"><i class="fa-solid fa-right-from-bracket mr-2"></i>Logout</a>
                             </div>

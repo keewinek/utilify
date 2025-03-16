@@ -65,6 +65,9 @@ export default function SignUpPage()
                     localStorage.setItem("user_data", JSON.stringify(data));
                     window.location.href = "/";
                 })
+            }).catch((error) => {
+                error_display.innerText = "An error occurred while creating your account. Please report this to us."
+                setLoading(false);
             })
         })
     }
@@ -93,7 +96,7 @@ export default function SignUpPage()
 
             {
                 loading &&
-                <Button text="Creating your account.." fa_icon="spinner" full/>
+                <Button text="Creating your account.." fa_icon="spinner animate-spin" full/>
             }
             {
                 !loading &&
